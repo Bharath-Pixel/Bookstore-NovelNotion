@@ -80,7 +80,7 @@ if (!userRole.equals("admin")) {
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  New in!
+                  New
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li><a class="dropdown-item" href="#">Action</a></li>
