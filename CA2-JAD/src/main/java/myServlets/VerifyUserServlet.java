@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.User;
+import model.UserDAO;
+
 @WebServlet("/VerifyUserServlet")
 public class VerifyUserServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -42,35 +45,22 @@ public class VerifyUserServlet extends HttpServlet {
         String url = "./pages/landing.jsp?loginid=" + user;
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String connURL = "jdbc:mysql://localhost/novelnotion_db?user=root&password=password&serverTimezone=UTC";
-            Connection conn = DriverManager.getConnection(connURL);
-            Statement stmt = conn.createStatement();
-
-            String sqlStr = "SELECT * FROM users WHERE username='" + user + "' AND password='" + pwd + "'";
-            ResultSet rs = stmt.executeQuery(sqlStr);
-
-            if (rs.next()) {
-                String userRole = rs.getString("role");
-                String userId = rs.getString("user_id");
-                session.setAttribute("sessUserName", user);
-                session.setAttribute("sessUserId", userId);
-                session.setAttribute("sessUserRole", userRole);
-
-                if (userRole.equals("admin") && request.getParameter("role") == null) {
-                    // Admin login from admin form
-                    response.sendRedirect(url + "&role=admin");
-                } else if (userRole.equals("member") && request.getParameter("role") != null && request.getParameter("role").equals("admin")) {
-                    // Customer login from admin form, redirect to login page
-                    response.sendRedirect("./login.jsp");
-                } else {
-                    response.sendRedirect(url + "&role=member");
-                }
-            } else {
-                response.sendRedirect("./pages/login.jsp");
-            }
-
-            conn.close();
+        	UserDAO DAO = new UserDAO();
+        	User loginUser = DAO.loginUser(user, pwd);
+        	if(loginUser==null) {
+        		response.sendRedirect("./pages/login.jsp");
+        	}
+        	session.setAttribute("sessUserName", user);
+            session.setAttribute("sessUserId", loginUser.getUserid());
+            session.setAttribute("sessUserRole", loginUser.getRole());
+        	
+        	if(loginUser.getRole().equals("admin")) {
+        		response.sendRedirect(url + "&role=admin");
+        	}
+        	else {
+        		response.sendRedirect(url + "&role=member");
+        	}
+            
         } catch (Exception e) {
             out.println("Error: " + e);
         }

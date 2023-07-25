@@ -15,7 +15,7 @@
       </ul>
       <h1 class="title">Sign Up</h1>
       <div class="form-container">
-        <form action="/JAD-Assignment/SignUpServlet" method="post">
+        <form action="/CA2-JAD/SignUpServlet" method="post">
           <div class="name-container">
             <div>
               <input

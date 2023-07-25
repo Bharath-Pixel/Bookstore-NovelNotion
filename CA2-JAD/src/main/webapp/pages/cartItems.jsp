@@ -1,4 +1,3 @@
-
 <%
 String id = (String) session.getAttribute("sessUserId");
 String userRole = (String) session.getAttribute("sessUserRole");
@@ -66,7 +65,7 @@ try {
 	conn.close();
 
 } catch (Exception e) {
-
+	e.printStackTrace();
 }
 %>
 
@@ -74,7 +73,6 @@ try {
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.sql.*"%>
 <%@ page import="java.text.DecimalFormat"%>
-<%@ include file="../functions/addToCart.jsp"%>
 
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -158,81 +156,81 @@ try {
 		</nav>
 	</header>
 
-	<div class="container">
-		<h1 class="cartHeading">Cart Items</h1>
-		<%
-		if (bookTitles.isEmpty()) {
-		%>
-		<p>No items in your cart.</p>
-		<%
-		} else {
-		%>
-		<table class="cart-table">
-			<thead>
-				<tr>
-					<th>Item</th>
-					<th>Quantity</th>
-					<th>Price</th>
-					<th>Total</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				<%
-				double grandTotal = 0.00;
-				for (int i = 0; i < bookTitles.size(); i++) {
-					grandTotal += totals.get(i);
-				%>
-				<tr>
-					<td>
-						<div class="media">
-							<!-- Use the retrieved book information -->
-							<img src="<%=bookImages.get(i)%>" class="img-fluid"
-								alt="Book Cover" onerror="this.src='../images/book1.jpg'" />
-							<div class="media-body">
-								<h4 class="book-title"><%=bookTitles.get(i)%></h4>
-								<p class="book-author">
-									by
-									<%=bookAuthors.get(i)%></p>
-							</div>
-						</div>
-					</td>
-					<td>
-						<!-- Use the retrieved quantity --> <%=quantities.get(i) != null ? quantities.get(i) : 0%>
-					</td>
-					<td>$<%=prices.get(i)%></td>
-					<td>$<%=totals.get(i)%></td>
-					<td>
-						<form method="post" action="../functions/removeFromCart.jsp">
-							<input type="hidden" name="bookId" value="<%=i%>" /> <input
-								type="submit" class="btn btn-danger" value="Remove" />
-						</form>
-					</td>
-				</tr>
-				<%
-				}
-				%>
-			</tbody>
-		</table>
-		<hr>
-		<div class="cart-total">
+		<div class="container">
+			<h1 class="cartHeading">Cart Items</h1>
 			<%
-			DecimalFormat decimalFormat = new DecimalFormat("0.00");
-			String formattedGrandTotal = decimalFormat.format(grandTotal);
+			if (bookTitles.isEmpty()) {
 			%>
-			<p class="total">
-				Subtotal: $<%=formattedGrandTotal%>
-			</p>
-<form method="post" action="CheckoutServlet">
-  <input type="hidden" name="total" value="<%=formattedGrandTotal%>" />
-  <button type="submit" class="btn btn-primary btn-long">Checkout</button>
-</form>
-	
+			<p>No items in your cart.</p>
+			<%
+			} else {
+			%>
+			<table class="cart-table">
+				<thead>
+					<tr>
+						<th>Item</th>
+						<th>Quantity</th>
+						<th>Price</th>
+						<th>Total</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<%
+					double grandTotal = 0.00;
+					for (int i = 0; i < bookTitles.size(); i++) {
+						grandTotal += totals.get(i);
+					%>
+					<tr>
+						<td>
+							<div class="media">
+								<!-- Use the retrieved book information -->
+								<img src="<%=bookImages.get(i)%>" class="img-fluid"
+									alt="Book Cover" onerror="this.src='../images/book1.jpg'" />
+								<div class="media-body">
+									<h4 class="book-title"><%=bookTitles.get(i)%></h4>
+									<p class="book-author">
+										by
+										<%=bookAuthors.get(i)%></p>
+								</div>
+							</div>
+						</td>
+						<td>
+							<!-- Use the retrieved quantity --> <%=quantities.get(i) != null ? quantities.get(i) : 0%>
+						</td>
+						<td>$<%=prices.get(i)%></td>
+						<td>$<%=totals.get(i)%></td>
+						<td>
+							<form method="post" action="../functions/removeFromCart.jsp">
+								<input type="hidden" name="bookId" value="<%=i%>" /> <input
+									type="submit" class="btn btn-danger" value="Remove" />
+							</form>
+						</td>
+					</tr>
+					<%
+					}
+					%>
+				</tbody>
+			</table>
+			<hr>
+			<div class="cart-total">
+				<%
+				DecimalFormat decimalFormat = new DecimalFormat("0.00");
+				String formattedGrandTotal = decimalFormat.format(grandTotal);
+				%>
+				<p class="total">
+					Subtotal: $<%=formattedGrandTotal%>
+				</p>
+	<form method="post" action="./checkout.jsp">
+	  <input type="hidden" name="total" value="<%=formattedGrandTotal%>" />
+	  <button type="submit" class="btn btn-primary btn-long">Checkout</button>
+	</form>
+		
+			</div>
+			<%
+			}
+			%>
 		</div>
-		<%
-		}
-		%>
-	</div>
 
 
 
