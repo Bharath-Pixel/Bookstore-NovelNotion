@@ -135,7 +135,6 @@ if (logout != null && logout.equals("true")) {
     <table class="table center-table">
       <thead>
         <tr>
-          <th>User ID</th>
           <th>First Name</th>
           <th>Last Name</th>
           <th>Username</th>
@@ -146,20 +145,21 @@ if (logout != null && logout.equals("true")) {
       <tbody>
         <% for (Object[] user : userList) { %>
         <tr>
-          <td><%= user[0] %></td>
           <td><%= user[1] %></td>
-          <td><%= user[2] %></td>
-          <td><%= user[3] %></td>
           <td><%= user[4] %></td>
+          <td><%= user[3] %></td>
+          <td><%= user[2] %></td>
           <td>
-		<a href="../functions/deleteUser.jsp?userId=<%= user[0] %>" class="btn btn-danger delete-btn">Delete</a>
+		 <form action="/CA2-JAD/DeleteUserServlet" method="post">
+			<input type="hidden" name="userId" value="<%=user[0]%>">
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
           </td>
         </tr>
         <% } %>
       </tbody>
     </table>
 <% } %>
-
 
 
 </section>

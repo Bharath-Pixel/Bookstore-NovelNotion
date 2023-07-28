@@ -97,14 +97,14 @@ public class UserDAO {
 	    return nrow;
 	}
 
-	public int deleteUser(String userid) throws SQLException, ClassNotFoundException {
+	public int deleteUser(int userId) throws SQLException, ClassNotFoundException {
 	    Connection conn = null;
 	    int nrow = 0;
 	    try {
 	        conn = DBConnection.getConnection();
-	        String sqlStr = "DELETE FROM user_details WHERE user_id = ?";
+	        String sqlStr = "DELETE FROM users WHERE user_id = ?";
 	        PreparedStatement pstmt = conn.prepareStatement(sqlStr);
-	        pstmt.setString(1, userid);
+	        pstmt.setInt(1, userId);
 	        nrow = pstmt.executeUpdate();
 	    } catch (SQLException e) {
 	        e.printStackTrace();

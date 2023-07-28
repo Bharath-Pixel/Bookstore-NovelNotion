@@ -21,7 +21,7 @@ if (!userRole.equals("member")) {
 	return; // Terminate further processing of the page
 }
 
-// Retrieve cart items from the database
+//Retrieve cart items from the database
 List<String> bookTitles = new ArrayList<String>();
 List<String> bookAuthors = new ArrayList<String>();
 List<Integer> quantities = new ArrayList<Integer>();
@@ -68,7 +68,6 @@ try {
 	e.printStackTrace();
 }
 %>
-
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.sql.*"%>
@@ -201,8 +200,8 @@ try {
 						<td>$<%=prices.get(i)%></td>
 						<td>$<%=totals.get(i)%></td>
 						<td>
-							<form method="post" action="../functions/removeFromCart.jsp">
-								<input type="hidden" name="bookId" value="<%=i%>" /> <input
+							<form method="post" action="/CA2-JAD/RemoveCartItemServlet">
+								<input type="hidden" name="bookId" value="<%=id%>" /> <input
 									type="submit" class="btn btn-danger" value="Remove" />
 							</form>
 						</td>
