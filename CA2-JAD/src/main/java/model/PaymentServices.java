@@ -35,9 +35,9 @@ public class PaymentServices {
         payer.setPaymentMethod("paypal");
          
         PayerInfo payerInfo = new PayerInfo();
-        payerInfo.setFirstName("William")
-                 .setLastName("Peterson")
-                 .setEmail("william.peterson@company.com");
+        payerInfo.setFirstName("sundar")
+                 .setLastName("bharath")
+                 .setEmail("sb-z5z9w26864884@personal.example.com");
          
         payer.setPayerInfo(payerInfo);
          

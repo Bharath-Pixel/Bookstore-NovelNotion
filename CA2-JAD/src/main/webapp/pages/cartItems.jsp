@@ -28,6 +28,7 @@ List<Integer> quantities = new ArrayList<Integer>();
 List<Double> prices = new ArrayList<Double>();
 List<Double> totals = new ArrayList<Double>();
 List<String> bookImages = new ArrayList<String>();
+List<Integer> bookIDs = new ArrayList<Integer>();
 
 try {
 	Class.forName("com.mysql.jdbc.Driver");
@@ -35,7 +36,7 @@ try {
 	Connection conn = DriverManager.getConnection(connURL);
 
 	// Query the cart items for the user
-	String sqlQuery = "SELECT books.book_title, books.author, books.image, cart.quantity, books.price "
+	String sqlQuery = "SELECT books.book_title, books.author, books.image, books.book_id, cart.quantity, books.price "
 	+ "FROM cart INNER JOIN books ON cart.book_id = books.book_id " + "WHERE cart.user_id = ?";
 
 	PreparedStatement stmt = conn.prepareStatement(sqlQuery);
@@ -50,6 +51,7 @@ try {
 		double price = resultSet.getDouble("price");
 		double total = quantity * price;
 		String image = resultSet.getString("image");
+		int bookID = resultSet.getInt("book_id");
 
 		// Add the book information to the lists
 		bookImages.add(image);
@@ -58,6 +60,7 @@ try {
 		quantities.add(quantity);
 		prices.add(price);
 		totals.add(total);
+		bookIDs.add(bookID);
 	}
 
 	resultSet.close();
@@ -67,6 +70,10 @@ try {
 } catch (Exception e) {
 	e.printStackTrace();
 }
+
+session.setAttribute("bookIDs",bookIDs);
+session.setAttribute("bookQuantity",quantities);
+
 %>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
@@ -201,9 +208,9 @@ try {
 						<td>$<%=totals.get(i)%></td>
 						<td>
 							<form method="post" action="/CA2-JAD/RemoveCartItemServlet">
-								<input type="hidden" name="bookId" value="<%=id%>" /> <input
+							<input type="hidden" name="bookId" value="<%=bookIDs%>" /> <input
 									type="submit" class="btn btn-danger" value="Remove" />
-							</form>
+															</form>
 						</td>
 					</tr>
 					<%

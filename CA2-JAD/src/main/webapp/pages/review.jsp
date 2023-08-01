@@ -11,7 +11,6 @@
             background-repeat: no-repeat;
             background-size: cover; /* Resize the background image to cover the entire container */
             padding: 20px;
-            font-family: "DM Sans", sans-serif;
         }
         .container {
             max-width: 600px;
@@ -126,6 +125,7 @@
                     </td>
                 </tr>
             </table>
+            
         </form>
     </div>
 </body>
