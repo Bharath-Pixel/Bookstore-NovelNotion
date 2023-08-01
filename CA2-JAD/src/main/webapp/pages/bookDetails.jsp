@@ -47,11 +47,12 @@ if (logout != null && logout.equals("true")) {
 				</button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav mb-2 mb-lg-0">
-						<li class="nav-item"><a class="nav-link" href="landing.jsp">Home</a></li>
+						<li class="nav-item"><a class="nav-link" href="landing.jsp">Home</a>
+						</li>
 						<li class="nav-item dropdown"><a
 							class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 							role="button" data-bs-toggle="dropdown" aria-expanded="false">
-								New in! </a>
+								Hello World </a>
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 								<li><a class="dropdown-item" href="#">Action</a></li>
 								<li><a class="dropdown-item" href="#">Another action</a></li>
@@ -66,10 +67,8 @@ if (logout != null && logout.equals("true")) {
 						<%
 						if (userRole != null && userRole.equals("member")) {
 						%>
-						<li class="nav-item"><a class="nav-link" href="cartItems.jsp">Cart
+						<li class="nav-item"><a class="nav-link" href="addToCart.jsp">Cart
 								items</a></li>
-						<li class="nav-item"><a class="nav-link" href="profile.jsp">Profile</a>
-						</li>
 						<li class="nav-item"><a class="nav-link" href="?logout=true">Log
 								out</a></li>
 						<%
@@ -78,7 +77,12 @@ if (logout != null && logout.equals("true")) {
 						<li class="nav-item"><a class="nav-link"
 							href="adminpanel.jsp">Inventory</a></li>
 						<li class="nav-item"><a class="nav-link" href="userInfo.jsp">User
-								Info </a></li>
+								Info</a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="salesReport.jsp">Sales Management</a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="customerDetails.jsp">Customer Management</a></li>
+
 						<li class="nav-item"><a class="nav-link" href="?logout=true">Log
 								out</a></li>
 						<%
@@ -86,8 +90,8 @@ if (logout != null && logout.equals("true")) {
 						%>
 						<li class="nav-item"><a class="nav-link" href="login.jsp">Log
 								In</a></li>
-						<li class="nav-item"><a class="nav-link" href="signUp.jsp">Sign
-								Up</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">Sign Up</a>
+						</li>
 						<%
 						}
 						%>
@@ -107,12 +111,12 @@ if (logout != null && logout.equals("true")) {
 					<%
 					int quantityLeft = (int) selectedBook[7];
 					if (quantityLeft < 10) {
-					%><span class="less-stock"><%=quantityLeft%> copies
-						left - order soon</span>
+					%><span class="less-stock"><%=quantityLeft%> copies left -
+						order soon</span>
 					<%
 					} else {
-					%><span class="in-stock">In Stock - <%=quantityLeft%>
-						copies left
+					%><span class="in-stock">In Stock - <%=quantityLeft%> copies
+						left
 					</span>
 					<%
 					}

@@ -1,28 +1,28 @@
 
-<%
-String id = (String) session.getAttribute("sessUserId");
-String userRole = (String) session.getAttribute("sessUserRole");
-
-// Handle logout request
-String logout = request.getParameter("logout");
-if (logout != null && logout.equals("true")) {
-	session.invalidate(); // Invalidate the session
-	response.sendRedirect("./login.jsp"); // Redirect to login.jsp
-	return; // Terminate further processing of the page
-}
-
-if (id == null || userRole == null) {
-	session.invalidate(); // Invalidate the session
-	response.sendRedirect("./login.jsp"); // Redirect to login.jsp
-	return; // Terminate further processing of the page
-}
-
-if (!userRole.equals("admin")) {
-	session.invalidate(); // Invalidate the session
-	response.sendRedirect("./login.jsp"); // Redirect to login.jsp
-	return; // Terminate further processing of the page
-}
-%>
+	<%
+	String id = (String) session.getAttribute("sessUserId");
+	String userRole = (String) session.getAttribute("sessUserRole");
+	
+	// Handle logout request
+	String logout = request.getParameter("logout");
+	if (logout != null && logout.equals("true")) {
+		session.invalidate(); // Invalidate the session
+		response.sendRedirect("./login.jsp"); // Redirect to login.jsp
+		return; // Terminate further processing of the page
+	}
+	
+	if (id == null || userRole == null) {
+		session.invalidate(); // Invalidate the session
+		response.sendRedirect("./login.jsp"); // Redirect to login.jsp
+		return; // Terminate further processing of the page
+	}
+	
+	if (!userRole.equals("admin")) {
+		session.invalidate(); // Invalidate the session
+		response.sendRedirect("./login.jsp"); // Redirect to login.jsp
+		return; // Terminate further processing of the page
+	}
+	%>
 
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
@@ -48,7 +48,7 @@ if (!userRole.equals("admin")) {
 <link rel="stylesheet" type="text/css" href="styles.css" />
 </head>
 <body>
-	<header>
+<header>
 		<nav class="navbar navbar-expand-lg">
 			<div class="container-fluid">
 				<!-- Navbar brand -->
@@ -94,6 +94,10 @@ if (!userRole.equals("admin")) {
 							href="adminpanel.jsp">Inventory</a></li>
 						<li class="nav-item"><a class="nav-link" href="userInfo.jsp">User
 								Info</a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="salesReport.jsp">Sales Management</a></li>
+							<li class="nav-item"><a class="nav-link"
+							href="customerDetails.jsp">Customer Management</a></li>
 
 						<li class="nav-item"><a class="nav-link" href="?logout=true">Log
 								out</a></li>
