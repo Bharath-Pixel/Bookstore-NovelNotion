@@ -39,4 +39,14 @@ public class Sales {
 	public void setPurchaseDate(Date purchaseDate) {
 		this.purchaseDate = purchaseDate;
 	}
+	@Override
+    public String toString() {
+        return "Sales{" +
+                "orderId=" + salesId +
+                ", bookTitle='" + bookTitle + '\'' +
+                ", customerName='" + customerName + '\'' +
+                ", purchaseAmount=" + purchaseAmount +
+                ", purchaseDate=" + purchaseDate +
+                '}';
+    }
 }

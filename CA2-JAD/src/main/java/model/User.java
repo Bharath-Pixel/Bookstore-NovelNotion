@@ -8,10 +8,19 @@ public class User {
 	private String role;
 	private String fname;
 	private String lname;
+	private double totalPurchase;
 	
+	public User() {
+		
+	}
+	public User(String customerName, double totalPurchase) {
+		this.username= customerName;
+		this.setTotalPurchase(totalPurchase);
+	}
 	public String getUserid() {
 		return userid;
 	}
+	
 	public void setUserid(String userid) {
 		this.userid = userid;
 	}
@@ -51,6 +60,12 @@ public class User {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public double getTotalPurchase() {
+		return totalPurchase;
+	}
+	public void setTotalPurchase(double totalPurchase) {
+		this.totalPurchase = totalPurchase;
 	}
 	
 }

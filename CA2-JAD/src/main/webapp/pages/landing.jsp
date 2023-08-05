@@ -65,7 +65,9 @@ if (logout != null && logout.equals("true")) {
 						<%
 						if (userRole != null && userRole.equals("member")) {
 						%>
-						<li class="nav-item"><a class="nav-link" href="addToCart.jsp">Cart
+						 <li class="nav-item"><a class="nav-link" href="userInfo.jsp">User Info
+                                </a></li>
+						<li class="nav-item"><a class="nav-link" href="cartItems.jsp">Cart
 								items</a></li>
 						<li class="nav-item"><a class="nav-link" href="?logout=true">Log
 								out</a></li>
@@ -74,10 +76,9 @@ if (logout != null && logout.equals("true")) {
 						%>
 						<li class="nav-item"><a class="nav-link"
 							href="adminpanel.jsp">Inventory</a></li>
-						<li class="nav-item"><a class="nav-link" href="userInfo.jsp">User
-								Info</a></li>
+						<li class="nav-item"><a class="nav-link" href="profile.jsp">Profile</a></li>
 						<li class="nav-item"><a class="nav-link"
-							href="salesReport.jsp">Sales Management</a></li>
+							href="<%=request.getContextPath() %>/SalesTopCustomerServlet">Sales Management</a></li>
 							<li class="nav-item"><a class="nav-link"
 							href="customerDetails.jsp">Customer Management</a></li>
 

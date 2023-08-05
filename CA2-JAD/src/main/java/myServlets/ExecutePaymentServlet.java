@@ -45,8 +45,7 @@ public class ExecutePaymentServlet extends HttpServlet {
             	int orderItemsCreated = orders.createOrderItems(bookIds, orderID, quantity);
             	if(orderItemsCreated>0) {
             		int cartRemove = orders.removeFromCart(user_id, orderItemsCreated);
-            	}
-            	
+            	}	
             }
              
             request.setAttribute("payer", payerInfo);
