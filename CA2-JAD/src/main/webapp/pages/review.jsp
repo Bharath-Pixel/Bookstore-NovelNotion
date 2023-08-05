@@ -1,3 +1,27 @@
+<%
+String id = (String) session.getAttribute("sessUserId");
+String userRole = (String) session.getAttribute("sessUserRole");
+// Handle logout request
+String logout = request.getParameter("logout");
+if (logout != null && logout.equals("true")) {
+	session.invalidate(); // Invalidate the session
+	response.sendRedirect("./login.jsp"); // Redirect to login.jsp
+	return; // Terminate further processing of the page
+}
+
+if (id == null || userRole == null) {
+	session.invalidate(); // Invalidate the session
+	response.sendRedirect("./login.jsp"); // Redirect to login.jsp
+	return; // Terminate further processing of the page
+}
+
+if (!userRole.equals("member")) {
+	session.invalidate(); // Invalidate the session
+	response.sendRedirect("./login.jsp"); // Redirect to login.jsp
+	return; // Terminate further processing of the page
+}
+%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
