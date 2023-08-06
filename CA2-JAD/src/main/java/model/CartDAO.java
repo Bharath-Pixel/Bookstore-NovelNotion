@@ -101,15 +101,14 @@ public class CartDAO {
     }
     
     
-    public int removeFromCart(String userId,int bookId) {
+    public int removeFromCart(int bookId) {
         Connection conn = null;
         int rowsDeleted = 0;
         try {
             conn = DBConnection.getConnection();
-            String query = "DELETE FROM cart WHERE cart.user_id = ? AND cart.book_id = ?";
+            String query = "DELETE FROM cart WHERE cart.user_id = ?";
             PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, userId);
-            pstmt.setInt(2, bookId);
+            pstmt.setInt(1, bookId);
             rowsDeleted = pstmt.executeUpdate();
             pstmt.close();
         } catch (SQLException e) {

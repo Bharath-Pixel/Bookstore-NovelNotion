@@ -12,9 +12,14 @@ public class Book {
     private String description;
     private String genre;
     private double price;
+    public int numOrders; // To store the number of orders for the book
     public int getId() {
 		return id;
 	}
+    
+    public Book() {
+        // Default constructor
+    }
 
 	public void setId(int id) {
 		this.id = id;
@@ -129,7 +134,7 @@ public class Book {
         this.rating = rating;
         this.image = image;
     }
-    
+
     public Book(int id, String title, String author, String ISBN, String publisher, Date publicationDate,
             String description, String genre, double price, int quantity, int rating, String image) {
     this.id = id;
@@ -146,6 +151,13 @@ public class Book {
     this.image = image;
 }
 
+    public int getNumOrders() {
+        return numOrders;
+    }
+
+    public void setNumOrders(int numOrders) {
+        this.numOrders = numOrders;
+    }
     
 
 }

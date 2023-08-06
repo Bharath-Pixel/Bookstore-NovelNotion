@@ -1,6 +1,8 @@
 package myServlets;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -29,15 +31,17 @@ public class ReviewPaymentServlet extends HttpServlet {
             PayerInfo payerInfo = payment.getPayer().getPayerInfo();
             Transaction transaction = payment.getTransactions().get(0);
             ShippingAddress shippingAddress = transaction.getItemList().getShippingAddress();
+            List<Item> items = transaction.getItemList().getItems();
+
              
             request.setAttribute("payer", payerInfo);
             request.setAttribute("transaction", transaction);
             request.setAttribute("shippingAddress", shippingAddress);
+            request.setAttribute("items", items); // Pass the list of books as an attribute
+
              
             String url = "pages/review.jsp?paymentId=" + paymentId + "&PayerID=" + payerId;
-             
             request.getRequestDispatcher(url).forward(request, response);
-             
         } catch (PayPalRESTException ex) {
             request.setAttribute("errorMessage", ex.getMessage());
             ex.printStackTrace();

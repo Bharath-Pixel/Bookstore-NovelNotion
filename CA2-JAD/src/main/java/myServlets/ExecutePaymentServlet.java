@@ -44,12 +44,13 @@ public class ExecutePaymentServlet extends HttpServlet {
             if (orderID>0) {
             	int orderItemsCreated = orders.createOrderItems(bookIds, orderID, quantity);
             	if(orderItemsCreated>0) {
-            		int cartRemove = orders.removeFromCart(user_id, orderItemsCreated);
+            		orders.removeFromCart(user_id);
             	}	
             }
              
             request.setAttribute("payer", payerInfo);
-            request.setAttribute("transaction", transaction);          
+            request.setAttribute("transaction", transaction);    
+            
  
             request.getRequestDispatcher("./pages/receipt.jsp").forward(request, response);
              

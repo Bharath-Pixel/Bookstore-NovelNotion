@@ -1,27 +1,10 @@
+<%@ page import="java.util.List"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="java.sql.*"%>
+<%@ page import="java.text.DecimalFormat"%>
+<%@ include file="../components/header.jsp"%>
 
 <%
-String id = (String) session.getAttribute("sessUserId");
-String userRole = (String) session.getAttribute("sessUserRole");
-// Handle logout request
-String logout = request.getParameter("logout");
-if (logout != null && logout.equals("true")) {
-	session.invalidate(); // Invalidate the session
-	response.sendRedirect("./login.jsp"); // Redirect to login.jsp
-	return; // Terminate further processing of the page
-}
-
-if (id == null || userRole == null) {
-	session.invalidate(); // Invalidate the session
-	response.sendRedirect("./login.jsp"); // Redirect to login.jsp
-	return; // Terminate further processing of the page
-}
-
-if (!userRole.equals("member")) {
-	session.invalidate(); // Invalidate the session
-	response.sendRedirect("./login.jsp"); // Redirect to login.jsp
-	return; // Terminate further processing of the page
-}
-
 // Retrieve cart items from the database
 // (Assuming you already have the cart item details in the following lists)
 List<String> bookTitles = new ArrayList<String>(); // Replace with your actual list
@@ -71,205 +54,154 @@ try {
 }
 %>
 
-<%@ page import="java.util.List"%>
-<%@ page import="java.util.ArrayList"%>
-<%@ page import="java.sql.*"%>
-<%@ page import="java.text.DecimalFormat"%>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Checkout Page</title>
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" />
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" />
-</head>
-<body>
-	<header>
-		<nav class="navbar navbar-expand-lg">
-			<div class="container-fluid">
-				<!-- Navbar brand -->
-				<a class="navbar-brand nav-link disabled" href="#">
-					<h2 style="font-weight: bold">Novel Notion</h2>
-				</a>
-				<button class="navbar-toggler" type="button"
-					data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-					aria-controls="navbarSupportedContent" aria-expanded="false"
-					aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav mb-2 mb-lg-0">
-						<li class="nav-item"><a class="nav-link" href="landing.jsp">Home</a></li>
-						<li class="nav-item dropdown"><a
-							class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-							role="button" data-bs-toggle="dropdown" aria-expanded="false">
-								New in! </a>
-							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<li><a class="dropdown-item" href="#">Action</a></li>
-								<li><a class="dropdown-item" href="#">Another action</a></li>
-								<li><hr class="dropdown-divider" /></li>
-								<li><a class="dropdown-item" href="#">Something else
-										here</a></li>
-							</ul></li>
-						<li class="nav-item"><a class="nav-link" href="#"
-							tabindex="-1">Deals </a></li>
-					</ul>
-					<ul class="navbar-nav navbar-right ms-auto">
-						<%
-						if (userRole != null && userRole.equals("member")) {
-						%>
-						<li class="nav-item"><a class="nav-link" href="cartItems.jsp">Cart
-								items</a></li>
-						<li class="nav-item"><a class="nav-link" href="profile.jsp">Profile</a>
-						</li>
-						<li class="nav-item"><a class="nav-link" href="?logout=true">Log
-								out</a></li>
-						<%
-						} else if (userRole != null && userRole.equals("admin")) {
-						%>
-						<li class="nav-item"><a class="nav-link"
-							href="adminpanel.jsp">Inventory</a></li>
-						<li class="nav-item"><a class="nav-link" href="userInfo.jsp">User
-								Info </a></li>
-						<li class="nav-item"><a class="nav-link" href="?logout=true">Log
-								out</a></li>
-						<%
-						} else {
-						%>
-						<li class="nav-item"><a class="nav-link" href="login.jsp">Log
-								In</a></li>
-						<li class="nav-item"><a class="nav-link" href="signUp.jsp">Sign
-								Up</a></li>
-						<%
-						}
-						%>
-					</ul>
+<div class="container mt-4 p-0">
+	<div class="row px-md-4 px-2 pt-4">
+		<!-- Cart items -->
+		<div class="col-lg-8">
+			<p class="pb-2 fw-bold">Order</p>
+			<div class="card">
+				<div class="table-responsive px-md-4 px-2 pt-3">
+					<table class="table table-borderless">
+						<tbody>
+							<%-- Iterate through the cart items and display them --%>
+							<%
+							for (int i = 0; i < bookTitles.size(); i++) {
+							%>
+							<tr class="border-bottom">
+								<td>
+									<div class="d-flex align-items-center">
+										<div>
+											<img class="pic" src="<%=bookImages.get(i)%>"
+												alt="Book Cover" />
+										</div>
+										<div class="ps-3 d-flex flex-column justify-content">
+											<p class="fw-bold"><%=bookTitles.get(i)%></p>
+											<small class="d-flex"> <span class="text-muted">Author:</span>
+												<span class="fw-bold"><%=bookAuthors.get(i)%></span>
+											</small>
+										</div>
+									</div>
+								</td>
+								<td>
+									<div class="d-flex">
+										<p class="text-muted">
+											$<%=prices.get(i)%></p>
+									</div>
+								</td>
+								<td>
+									<div class="d-flex align-items-center">
+										<span class="pe-3 text-muted">Quantity</span> <span
+											class="pe-3"> <input class="ps-2" type="number"
+											value="<%=quantities.get(i)%>" />
+										</span>
+									</div>
+								</td>
+							</tr>
+							<%
+							}
+							%>
+						</tbody>
+					</table>
 				</div>
 			</div>
-		</nav>
-	</header>
-	<div class="container mt-4 p-0">
-		<div class="row px-md-4 px-2 pt-4">
-			<!-- Cart items -->
-			<div class="col-lg-8">
-				<p class="pb-2 fw-bold">Order</p>
-				<div class="card">
-					<div class="table-responsive px-md-4 px-2 pt-3">
-						<table class="table table-borderless">
-							<tbody>
-								<%-- Iterate through the cart items and display them --%>
-								<%
-								for (int i = 0; i < bookTitles.size(); i++) {
-								%>
-								<tr class="border-bottom">
-									<td>
-										<div class="d-flex align-items-center">
-											<div>
-												<img class="pic" src="<%=bookImages.get(i)%>"
-													alt="Book Cover" />
-											</div>
-											<div class="ps-3 d-flex flex-column justify-content">
-												<p class="fw-bold"><%=bookTitles.get(i)%></p>
-												<small class="d-flex"> <span class="text-muted">Author:</span>
-													<span class="fw-bold"><%=bookAuthors.get(i)%></span>
-												</small>
-											</div>
-										</div>
-									</td>
-									<td>
-										<div class="d-flex">
-											<p class="text-muted">
-												$<%=prices.get(i)%></p>
-										</div>
-									</td>
-									<td>
-										<div class="d-flex align-items-center">
-											<span class="pe-3 text-muted">Quantity</span> <span
-												class="pe-3"> <input class="ps-2" type="number"
-												value="<%=quantities.get(i)%>" />
-											</span>
-										</div>
-									</td>
-								</tr>
-								<%
-								}
-								%>
-							</tbody>
-						</table>
+		</div>
+
+		<!-- Payment summary -->
+		<div class="col-lg-4 payment-summary">
+			<p class="fw-bold pt-lg-0 pt-3 pb-2">Payment Summary</p>
+			<div class="card px-md-3 px-2 pt-4">
+				<div class="d-flex flex-column b-bottom">
+					<%-- Iterate through the cart items and calculate total amount --%>
+					<%
+					double totalAmount = 0.0;
+					for (int i = 0; i < bookTitles.size(); i++) {
+						totalAmount += totals.get(i);
+					}
+
+					/// Format the amounts to two decimal places
+					DecimalFormat df = new DecimalFormat("#0.00");
+					totalAmount = Double.parseDouble(df.format(totalAmount));
+					double shippingCost = Double.parseDouble(df.format(5.00)); // Assuming shipping cost is a flat rate of $5.00
+					double gst = Double.parseDouble(df.format(totalAmount * 0.07));
+					double totalWithShippingAndGst = Double.parseDouble(df.format(totalAmount + shippingCost + gst));
+					%>
+
+					<div class="d-flex justify-content-between py-3">
+						<small class="text-muted">Sub-Total</small>
+						<p>
+							$<%=totalAmount%></p>
+					</div>
+					<div class="d-flex justify-content-between pb-3">
+						<small class="text-muted">Shipping</small>
+						<p>$5.00</p>
+					</div>
+					<div class="d-flex justify-content-between">
+						<small class="text-muted">GST (7%)</small>
+						<p>
+							$<%=gst%></p>
+					</div>
+					<hr class="my-1">
+					<div class="d-flex justify-content-between">
+						<small class="text-muted">Total Amount</small>
+						<p>
+							$<%=totalWithShippingAndGst%></p>
 					</div>
 				</div>
 			</div>
+			<div class="d-flex justify-content-center mt-3">
+				<form action="/CA2-JAD/AuthorizePayment" method="post">
+					<!-- Hidden input fields to store the payment details -->
+					<input type="hidden" name="subtotal" value="<%=totalAmount%>">
+					<input type="hidden" name="shipping" value="5.00"> <input
+						type="hidden" name="tax" value="<%=gst%>"> <input
+						type="hidden" name="total" value="<%=totalWithShippingAndGst%>">
+					<%
+					for (String title : bookTitles) {
+					%>
+					<input type="hidden" name="product" value="<%=title%>">
+					<%
+					}
+					%>
 
-			<!-- Payment summary -->
-			<!-- Payment summary -->
-			<div class="col-lg-4 payment-summary">
-				<p class="fw-bold pt-lg-0 pt-3 pb-2">Payment Summary</p>
-				<div class="card px-md-3 px-2 pt-4">
-					<div class="d-flex flex-column b-bottom">
-						<%-- Iterate through the cart items and calculate total amount --%>
-						<%
-						double totalAmount = 0.0;
-						for (int i = 0; i < bookTitles.size(); i++) {
-							totalAmount += totals.get(i);
-						}
+					<!-- Address details form fields -->
 
-						/// Format the amounts to two decimal places
-						DecimalFormat df = new DecimalFormat("#0.00");
-						totalAmount = Double.parseDouble(df.format(totalAmount));
-						double shippingCost = Double.parseDouble(df.format(5.00)); // Assuming shipping cost is a flat rate of $5.00
-						double gst = Double.parseDouble(df.format(totalAmount * 0.07));
-						double totalWithShippingAndGst = Double.parseDouble(df.format(totalAmount + shippingCost + gst));
-						%>
 
-						<div class="d-flex justify-content-between py-3">
-							<small class="text-muted">Sub-Total</small>
-							<p>
-								$<%=totalAmount%></p>
-						</div>
-						<div class="d-flex justify-content-between pb-3">
-							<small class="text-muted">Shipping</small>
-							<p>$5.00</p>
-						</div>
-						<div class="d-flex justify-content-between">
-							<small class="text-muted">GST (7%)</small>
-							<p>
-								$<%=gst%></p>
-						</div>
-						<hr class="my-1">
-						<div class="d-flex justify-content-between">
-							<small class="text-muted">Total Amount</small>
-							<p>
-								$<%=totalWithShippingAndGst%></p>
-						</div>
+					<div class="mb-3">
+						<label for="address" class="form-label">Address</label> <input
+							type="text" class="form-control" id="address" name="address"
+							required>
 					</div>
-				</div>
-				<div class="d-flex justify-content-center mt-3">
-					<form action="/CA2-JAD/AuthorizePayment" method="post">
-						<input type="hidden" name="subtotal" value="<%=totalAmount%>">
-						<input type="hidden" name="shipping" value="5.00"> 
-						<input type="hidden" name="tax" value="<%=gst%>"> 
-						<input type="hidden" name="total" value="<%=totalWithShippingAndGst%>">
-						<%
-						for (String title : bookTitles) {
-						%>
-						<input type="hidden" name="product" value="<%=title%>">
-						<%
-						}
-						%>
-						<button type="submit" class="btn btn-primary">Checkout</button>
-					</form>
-				</div>
-			</div>
+					<div class="mb-3">
+						<label for="city" class="form-label">City</label> <input
+							type="text" class="form-control" id="city" name="city" required>
+					</div>
+					<div class="mb-3">
+						<label for="postalCode" class="form-label">Postal Code</label> <input
+							type="text" class="form-control" id="postalCode"
+							name="postalCode" required>
+					</div>
+					<div class="mb-3">
+						<label for="country" class="form-label">Country</label> <input
+							type="text" class="form-control" id="country" name="country"
+							required>
+					</div>
 
+					<!-- Hidden input field for session user ID -->
+					<!-- Hidden input field for session user ID -->
+					<input type="hidden" id="userId" name="userId" value="<%=id%>">
+
+
+					<!-- Checkout button -->
+					<button type="submit" class="btn btn-primary">Checkout</button>
+
+				</form>
+			</div>
 		</div>
 	</div>
+</div>
 
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 
@@ -427,6 +359,18 @@ input:focus {
 	width: 35px;
 	height: 35px;
 	object-fit: cover;
+}
+
+.col-lg-4 {
+	order: 1; /* Place the address form first in the row */
+}
+
+.col-lg-4 .card {
+	display: block; /* Make the card a block element */
+}
+
+.col-lg-4 h5 {
+	text-align: center; /* Center the "Shipping Address" heading */
 }
 </style>
 </body>
