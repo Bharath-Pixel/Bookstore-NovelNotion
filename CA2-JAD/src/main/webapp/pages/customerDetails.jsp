@@ -365,10 +365,5 @@ body {
 	<form action="/CA2-JAD/CustomerChartDataServlet" method="GET">
 			<button type="submit" class="btn btn-primary">Generate Chart</button>
 		</form>
-
-		<!-- Chart HTML will be displayed here -->
-		<div class="chart-container">
-			<%= request.getAttribute("chartHTML") %>
-		</div>
 </body>
 </html>

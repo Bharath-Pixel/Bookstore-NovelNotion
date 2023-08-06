@@ -6,13 +6,12 @@
 
 <%
 // Retrieve cart items from the database
-// (Assuming you already have the cart item details in the following lists)
-List<String> bookTitles = new ArrayList<String>(); // Replace with your actual list
-List<String> bookAuthors = new ArrayList<String>(); // Replace with your actual list
-List<Integer> quantities = new ArrayList<Integer>(); // Replace with your actual list
-List<Double> prices = new ArrayList<Double>(); // Replace with your actual list
-List<Double> totals = new ArrayList<Double>(); // Replace with your actual list
-List<String> bookImages = new ArrayList<String>(); // Replace with your actual list
+List<String> bookTitles = new ArrayList<String>(); 
+List<String> bookAuthors = new ArrayList<String>();
+List<Integer> quantities = new ArrayList<Integer>(); 
+List<Double> prices = new ArrayList<Double>();
+List<Double> totals = new ArrayList<Double>(); 
+List<String> bookImages = new ArrayList<String>();
 
 try {
 	Class.forName("com.mysql.jdbc.Driver");
@@ -91,9 +90,7 @@ try {
 								<td>
 									<div class="d-flex align-items-center">
 										<span class="pe-3 text-muted">Quantity</span> <span
-											class="pe-3"> <input class="ps-2" type="number"
-											value="<%=quantities.get(i)%>" />
-										</span>
+											class="pe-3"><%=quantities.get(i)%></span>
 									</div>
 								</td>
 							</tr>

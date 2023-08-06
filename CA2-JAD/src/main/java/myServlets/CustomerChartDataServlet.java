@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 public class CustomerChartDataServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Assuming you have a method to retrieve customer data from the database
         List<CustomerData> customerDataList = retrieveCustomerData();
 
         // Process customer data to get the most and least purchases
@@ -60,7 +59,6 @@ public class CustomerChartDataServlet extends HttpServlet {
         request.getRequestDispatcher("./pages/chart.jsp").forward(request, response);
     }
 
-    // Sample method to retrieve customer data (replace with your implementation)
     private List<CustomerData> retrieveCustomerData() {
         List<CustomerData> customerDataList = new ArrayList<>();
         try {

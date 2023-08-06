@@ -360,36 +360,6 @@ button:hover {
 		%>
 
 
-		<h3 class="salesHeader">
-			Customers who purchased the book:
-			<%=request.getParameter("bookTitle")%></h3>
-		<%
-		List<String> customersByBook = (List<String>) request.getAttribute("customersByBook");
-		if (customersByBook != null && !customersByBook.isEmpty()) {
-		%>
-		<table>
-			<tr>
-				<th>Customer Name</th>
-			</tr>
-			<%
-			for (String customerName : customersByBook) {
-			%>
-			<tr>
-				<td><%=customerName%></td>
-			</tr>
-			<%
-			}
-			%>
-		</table>
-		<%
-		} else {
-		%>
-		<p class="no-records">No customers found for this book.</p>
-		<%
-		}
-		%>
-
-
 	</section>
 
 	<script
