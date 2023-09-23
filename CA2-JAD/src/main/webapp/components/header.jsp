@@ -77,7 +77,7 @@ if (logout != null && logout.equals("true")) {
 						<li class="nav-item"><a class="nav-link" href="userInfo.jsp">User
 								Info</a></li>
 						<li class="nav-item"><a class="nav-link"
-							href="salesReport.jsp">Sales Management</a></li>
+							href="<%=request.getContextPath() %>/SalesTopCustomerServlet">Sales Management</a></li>
 							<li class="nav-item"><a class="nav-link"
 							href="customerDetails.jsp">Customer Management</a></li>
 
